@@ -35,6 +35,7 @@ describe 'strongswan::secrets', type: :define do
             }
           }
         end
+
         it {
           is_expected.to contain_concat__fragment('ipsec_secrets_secret-user'). \
             with_content(%r{my_id 10.1.2.3 : ECDSA user\.der})
