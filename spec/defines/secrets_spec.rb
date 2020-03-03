@@ -24,8 +24,23 @@ describe 'strongswan::secrets', type: :define do
 
       it {
         is_expected.to contain_concat__fragment('ipsec_secrets_secret-user'). \
-          with_content(%r{: ECDSA user\.der})
+          with_content(%r{user : ECDSA user\.der})
       }
+      context 'with selectors' do
+        let :params do
+          {
+            selectors: ['my_id', '10.1.2.3'],
+            options: {
+              'ECDSA' => 'user.der'
+            }
+          }
+        end
+
+        it {
+          is_expected.to contain_concat__fragment('ipsec_secrets_secret-user'). \
+            with_content(%r{my_id 10.1.2.3 : ECDSA user\.der})
+        }
+      end
     end
   end
 end
